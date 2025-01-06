@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Emoji.css";
 
 const EMOJIS = new Map<string, string>([
@@ -7,14 +8,30 @@ const EMOJIS = new Map<string, string>([
 ]);
 
 export default function Emoji() {
-  let situacao = "dead";
+  const [situacao, setSituacao] = useState("deady");
 
     function toHappy(){
-        console.log("toHappy()!")
+        setSituacao("happy")
     }
 
     function toDead(){
-        console.log("toDead()!")
+        setSituacao("dead")
+    }
+
+    function toSick(){
+        setSituacao("sick")
+    }
+
+    function toCycle(){
+        if(situacao == "happy"){
+            toSick();
+        }
+        else if(situacao == "sick"){
+            toDead();
+        }
+        else{
+            toHappy();
+        }
     }
 
   return (
@@ -22,7 +39,9 @@ export default function Emoji() {
       <div className="situacao">{EMOJIS.get(situacao) || "🫥"}</div>
       <div className="acoes">
         <button onClick={toHappy}>Vivo</button>
+        <button onClick={toSick}>Doente</button>
         <button onClick={toDead}>Morto</button>
+        <button onClick={toCycle}>Ciclo</button>
       </div>
     </div>
   );
