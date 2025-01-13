@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Emoji.css";
-import Atributo from './Atributo'
+import Atributo from "./Atributo";
 
 const EMOJIS = new Map<string, string>([
   ["happy", "🙂"],
@@ -10,33 +10,51 @@ const EMOJIS = new Map<string, string>([
 
 export default function Emoji() {
   const [situacao, setSituacao] = useState("deady");
-  const [saude, setSaude] = useState(4);
-  const [energia, setEnergia] = useState(3);
-  const [comida, setComida] = useState(2);
+  const [saude, setSaude] = useState(5);
+  const [energia, setEnergia] = useState(1);
+  const [comida, setComida] = useState(1);
   const [agua, setAgua] = useState(1);
-  
-  function onAlimentar(){
-    setComida(comida === 5 ? comida : comida + 1);
+  const [luz, setLuz] = useState(true);
+
+  function onAlimentar() {
+    setComida(Math.min(comida + 1, 5));
   }
-  function onHidratar(){
-    setAgua(agua === 5 ? agua : agua + 1);
-    
+  function onHidratar() {
+    setAgua(Math.min(agua + 1, 5));
   }
-  function onLigaDesligaLuz(){
+  function onLigaDesligaLuz() {
+    setLuz(!luz);
   }
 
-  function onCiclo(){
+  function onCiclo() {
+    setComida(Math.max(0, comida - 1));
+    setAgua(Math.max(0, agua - 1));
+
+    if(luz){
+      setEnergia(Math.max(0, energia - 1));
+    }else{
+      setEnergia(Math.min(agua + 1, 5));
+    }
+
+    if (comida === 0) {
+      setSaude((prevSaude) => Math.max(0, prevSaude - 1));
+    }
+    if (agua === 0) {
+      setSaude((prevSaude) => Math.max(0, prevSaude - 1));
+    }
+    if (energia === 0) {
+      setSaude((prevSaude) => Math.max(0, prevSaude - 1));
+    }
   }
 
   return (
     <div className="emoji">
       <div className="situacao">{EMOJIS.get(situacao) || "🫥"}</div>
-      <div className="atributos"></div>
       <div className="atributos">
         <Atributo icone="❤️" quantidade={saude}></Atributo>
-        <Atributo icone="⚡" quantidade={energia}></Atributo>
         <Atributo icone="🍗" quantidade={comida}></Atributo>
         <Atributo icone="💧" quantidade={agua}></Atributo>
+        <Atributo icone="⚡" quantidade={energia}></Atributo>
       </div>
       <div className="acoes">
         <button onClick={onAlimentar}>Dar comida</button>
