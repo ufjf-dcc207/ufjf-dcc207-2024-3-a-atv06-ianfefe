@@ -9,11 +9,7 @@ export default function Atributo({icone}: AtributoProps) {
     const [quantidade, setQuantidade] = useState(3);
 
     function addIcone(){
-        if(quantidade == 5){
-            setQuantidade(0);
-        }else{
-            setQuantidade(quantidade + 1);
-        }
+        setQuantidade((quant) => (quant === 5 ? 0 : quant + 1));
     }
 
   return (

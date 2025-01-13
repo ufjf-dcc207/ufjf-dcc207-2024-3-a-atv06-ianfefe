@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Emoji.css";
+import Atributo from './Atributo'
 
 const EMOJIS = new Map<string, string>([
   ["happy", "🙂"],
@@ -10,38 +11,26 @@ const EMOJIS = new Map<string, string>([
 export default function Emoji() {
   const [situacao, setSituacao] = useState("deady");
 
-    function toHappy(){
-        setSituacao("happy")
-    }
-
-    function toDead(){
-        setSituacao("dead")
-    }
-
-    function toSick(){
-        setSituacao("sick")
-    }
-
-    function toCycle(){
-        if(situacao == "happy"){
-            toSick();
-        }
-        else if(situacao == "sick"){
-            toDead();
-        }
-        else{
-            toHappy();
-        }
-    }
+  function onAlimentar(){}
+  function onHidratar(){}
+  function onLigaDesligaLuz(){}
+  function onCiclo(){}
 
   return (
     <div className="emoji">
       <div className="situacao">{EMOJIS.get(situacao) || "🫥"}</div>
+      <div className="atributos"></div>
+      <div className="atributos">
+        <Atributo icone="❤️"></Atributo>
+        <Atributo icone="⚡"></Atributo>
+        <Atributo icone="🍗"></Atributo>
+        <Atributo icone="💧"></Atributo>
+      </div>
       <div className="acoes">
-        <button onClick={toHappy}>Vivo</button>
-        <button onClick={toSick}>Doente</button>
-        <button onClick={toDead}>Morto</button>
-        <button onClick={toCycle}>Ciclo</button>
+        <button onClick={onAlimentar}>Dar comida</button>
+        <button onClick={onHidratar}>Dar água</button>
+        <button onClick={onLigaDesligaLuz}>Ligar/Desligar a Luz</button>
+        <button onClick={onCiclo}>Ciclo</button>
       </div>
     </div>
   );

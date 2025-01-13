@@ -1,6 +1,12 @@
 .emoji {
+
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+
     .situacao {
         font-size: 4em;
+        margin: 10px;
     }
     .acoes {
         display: flex;
